@@ -1,6 +1,6 @@
 package com.dafttech.workspace
 
-import com.dafttech.logic.Signal
+import com.dafttech.logic.{Utils, Signal}
 import com.dafttech.logic.ic.{AndGate, IC, OrGate, XOrGate}
 
 /**
@@ -61,6 +61,4 @@ class Workspace {
 
     testTable(ic)
   }
-
-  test1
 }
