@@ -1,6 +1,7 @@
 package com.dafttech.workspace
 
-import com.dafttech.logic.{IC, Signal}
+import com.dafttech.logic.Signal
+import com.dafttech.logic.ic.{AndGate, IC}
 
 /**
  * Created by LolHens on 21.07.2015.
@@ -12,18 +13,38 @@ class Workspace {
     println((!on).value)
   }
 
-  def testTable = {
+  def testTable(ic: IC) = {
+    ic.table.foreach(e => {
+      println(e._1.mkString(",\t") + "\t=> " + e._2.mkString(",\t"))
+    })
+  }
+
+  def testIC = {
     val ic = IC(2, 1)
 
     val variable = ic.in(0) && ic.in(1)
 
     ic.out(0) = !variable
 
-    ic.table.foreach(e => {
-      println(e._1.mkString(",\t") + "\t=> " + e._2.mkString(",\t"))
-    })
+    testTable(ic)
   }
 
-  testTable
+  def testICOutDelegate = {
+    val ic = IC(1, 1)
+
+    val out = ic.out(0)
+
+    ic.out(0) = ic.in(0)
+
+    ic.in(0) = Signal(true)
+
+    println(ic.out(0).value)
+  }
+
+  def testGates = {
+    testTable(AndGate())
+  }
+
+  testICOutDelegate
 
 }
