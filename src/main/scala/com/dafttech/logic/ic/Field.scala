@@ -5,6 +5,7 @@ import com.dafttech.logic.Signal
 /**
  * Created by LolHens on 22.07.2015.
  */
+@Deprecated
 class Field(size: Int) extends IC(size, size) {
   def value: Int = {
     var int = 0
