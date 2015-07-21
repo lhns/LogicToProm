@@ -3,6 +3,8 @@ package com.dafttech.logic.ic
 import com.dafttech.logic.ic.IC.Pins
 import com.dafttech.logic.{Signal, Utils}
 
+import scala.collection.mutable.ListBuffer
+
 /**
  * Created by LolHens on 21.07.2015.
  */
@@ -12,21 +14,21 @@ class IC protected(inPins: Int, outPins: Int) {
 
   object out extends Pins(outPins)
 
-  private def row(inArray: Array[Boolean]): Array[Boolean] = {
-    for (i <- 0 until inArray.size) in(i) = Signal(inArray(i))
+  private def row(inList: List[Boolean]): List[Boolean] = {
+    for (i <- 0 until inList.size) in(i) = Signal(inList(i))
 
-    val outArray = new Array[Boolean](out.size)
-    for (i <- 0 until outArray.size) outArray(i) = out(i).value
+    val outList = ListBuffer[Boolean]()
+    for (i <- 0 until out.size) outList += out(i).value
 
-    outArray
+    outList.toList
   }
 
-  def table: Map[Array[Boolean], Array[Boolean]] = {
-    var map = Map[Array[Boolean], Array[Boolean]]()
+  def table: Map[List[Boolean], List[Boolean]] = {
+    var map = Map[List[Boolean], List[Boolean]]()
 
     for (i <- 0 until Math.pow(2, in.size).toInt) {
-      val array = Utils.intToBooleanArray(i, in.size)
-      map += array -> row(array)
+      val list = Utils.intToBooleanList(i, in.size)
+      map += list -> row(list)
     }
 
     map

@@ -1,7 +1,7 @@
 package com.dafttech.workspace
 
-import com.dafttech.logic.{Utils, Signal}
 import com.dafttech.logic.ic.{AndGate, IC, OrGate, XOrGate}
+import com.dafttech.logic.{Signal, Utils}
 
 /**
  * Created by LolHens on 21.07.2015.
@@ -61,4 +61,6 @@ class Workspace {
 
     testTable(ic)
   }
+
+  println(Utils.toBin(AndGate()).mkString(","))
 }
