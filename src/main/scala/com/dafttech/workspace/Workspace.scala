@@ -1,10 +1,9 @@
 package com.dafttech.workspace
 
-import java.io.{FileOutputStream, File}
-import java.nio.file.Path
+import java.io.FileOutputStream
 
 import com.dafttech.logic.ic.{AndGate, IC, OrGate, XOrGate}
-import com.dafttech.logic.{Signal, Utils}
+import com.dafttech.logic.{Field, Signal, Utils}
 
 /**
  * Created by LolHens on 21.07.2015.
@@ -58,6 +57,7 @@ class Workspace {
   }
 
   def S(a: Signal, b: Signal, c: Signal) = (a XOR b) XOR c
+
   def Co(a: Signal, b: Signal, c: Signal) = ((a XOR b) AND c) OR (a AND b)
 
   def adder = {
@@ -95,5 +95,11 @@ class Workspace {
 
   }
 
-  adder
+  //adder
+
+  val f = Field(3)
+
+  val f2 = Field(f.signal(0), f.signal(1), f.signal(2))
+
+  println(f2.value)
 }
