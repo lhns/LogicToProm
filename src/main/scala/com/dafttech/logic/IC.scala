@@ -48,7 +48,16 @@ class IC private(inPins: Int, outPins: Int) {
   }
 
   def table: Map[Array[Boolean], Array[Boolean]] = {
-    ???
+    var map = Map[Array[Boolean], Array[Boolean]]()
+
+    for (combination <- 0 until Math.pow(2, in.length).toInt) {
+      val inArray = new Array[Boolean](in.length)
+      for (bitPos <- 0 until inArray.length) inArray(bitPos) = ((combination >>> bitPos) & 1) != 0
+
+      map += inArray -> row(inArray)
+    }
+
+    map
   }
 }
 
