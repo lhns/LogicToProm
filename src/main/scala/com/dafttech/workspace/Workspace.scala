@@ -1,5 +1,8 @@
 package com.dafttech.workspace
 
+import java.io.{FileOutputStream, File}
+import java.nio.file.Path
+
 import com.dafttech.logic.ic.{AndGate, IC, OrGate, XOrGate}
 import com.dafttech.logic.{Signal, Utils}
 
@@ -54,13 +57,43 @@ class Workspace {
     testTable(XOrGate())
   }
 
-  def test2 = {
-    val ic = IC(3, 8)
+  def S(a: Signal, b: Signal, c: Signal) = (a XOR b) XOR c
+  def Co(a: Signal, b: Signal, c: Signal) = ((a XOR b) AND c) OR (a AND b)
 
-    ic.out(0) = ic.in(0) && ic.in(1)
+  def adder = {
 
-    testTable(ic)
+    //in0..2 = 3bit input; in3 = OutEnable; in4 = invert
+    val ic = IC(13, 8)
+
+    val a0 = ic.in(0)
+    val a1 = ic.in(1)
+    val a2 = ic.in(2)
+    val a3 = ic.in(3)
+
+    val b0 = ic.in(4)
+    val b1 = ic.in(5)
+    val b2 = ic.in(6)
+    val b3 = ic.in(7)
+
+    val c0 = ic.in(8)
+
+    val c1 = Co(a0, b0, c0)
+    val c2 = Co(a1, b1, c1)
+    val c3 = Co(a2, b2, c2)
+    val c4 = Co(a3, b3, c3)
+
+    ic.out(0) = S(a0, b0, c0)
+    ic.out(1) = S(a1, b1, c1)
+    ic.out(2) = S(a2, b2, c2)
+    ic.out(3) = S(a3, b3, c3)
+
+    ic.out(4) = c4;
+
+    val file = new FileOutputStream("output.bin")
+    file.write(Utils.toBin(ic));
+    file.close();
+
   }
 
-  println(Utils.toBin(AndGate()).mkString(","))
+  adder
 }

@@ -6,6 +6,10 @@ package com.dafttech.logic
 abstract class Signal {
   def value: Boolean
 
+  def XOR(signal: Signal) = Signal(value ^ signal.value)
+  def AND(signal: Signal) = Signal(value && signal.value)
+  def OR(signal: Signal) = Signal(value || signal.value)
+
   def &&(signal: Signal) = Signal(value && signal.value)
 
   def ||(signal: Signal) = Signal(value || signal.value)
