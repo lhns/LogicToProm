@@ -1,7 +1,7 @@
 package com.dafttech.workspace
 
 import com.dafttech.logic.Signal
-import com.dafttech.logic.ic.{AndGate, IC}
+import com.dafttech.logic.ic.{AndGate, IC, OrGate}
 
 /**
  * Created by LolHens on 21.07.2015.
@@ -42,7 +42,14 @@ class Workspace {
   }
 
   def testGates = {
+    println("AND")
     testTable(AndGate())
+
+    println("OR")
+    testTable(OrGate())
+
+    println("XOR")
+    testTable(XOrGate())
   }
 
   testICOutDelegate
