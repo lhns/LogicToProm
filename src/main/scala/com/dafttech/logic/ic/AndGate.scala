@@ -9,7 +9,7 @@ class AndGate private() extends IC(2, 1) {
   val b = in(1)
 
   val output = out(0)
-  
+
   out(0) = a && b
 }
 

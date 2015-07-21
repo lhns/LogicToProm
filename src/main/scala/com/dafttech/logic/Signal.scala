@@ -3,7 +3,7 @@ package com.dafttech.logic
 /**
  * Created by LolHens on 21.07.2015.
  */
-trait Signal {
+abstract class Signal {
   def value: Boolean
 
   def &&(signal: Signal) = Signal(value && signal.value)
