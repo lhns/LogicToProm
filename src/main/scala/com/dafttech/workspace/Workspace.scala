@@ -15,7 +15,7 @@ class Workspace {
 
   def testTable(ic: IC) = {
     ic.table.foreach(e => {
-      println(e._1.mkString(",\t") + "\t=> " + e._2.mkString(",\t"))
+      println((e._1.mkString(",\t") + "\t=> " + e._2.mkString(",\t")).replaceAll("true", "1").replaceAll("false", "0"))
     })
   }
 
@@ -54,5 +54,13 @@ class Workspace {
     testTable(XOrGate())
   }
 
-  testGates
+  def test2 = {
+    val ic = IC(3, 8)
+
+    ic.out(0) = ic.in(0) && ic.in(1)
+
+    testTable(ic)
+  }
+
+  test1
 }
