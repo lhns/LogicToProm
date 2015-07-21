@@ -9,4 +9,5 @@ class Workspace {
   val on = Signal(true)
   println(on.value)
   println((!on).value)
+
 }

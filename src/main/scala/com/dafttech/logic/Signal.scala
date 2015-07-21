@@ -10,6 +10,8 @@ trait Signal {
 
   def ||(signal: Signal) = Signal(value || signal.value)
 
+  def ^(signal: Signal) = Signal(value ^ signal.value)
+
   def unary_! = Signal(!value)
 }
 
