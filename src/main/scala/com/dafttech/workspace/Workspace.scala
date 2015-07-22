@@ -3,7 +3,7 @@ package com.dafttech.workspace
 import java.nio.file.Paths
 
 import com.dafttech.logic.Signal._
-import com.dafttech.logic.ic.{AndGate, IC, OrGate, XOrGate}
+import com.dafttech.logic.ic._
 import com.dafttech.logic.{Field, Signal, Utils}
 
 /**
@@ -101,9 +101,17 @@ class Workspace {
     val IS_NOP = ic.in(4)
     val IS_JMP = ic.in(5)
 
-    /*  DO_TEND */ ic.out(0) = !Signal((((STATE.value == 0) AND IS_NOP) OR ((STATE.value == 2) AND IS_JMP)).value)
-    /* !LOAD_CP */ ic.out(1) = true
-    /* !CTEN_CP */ ic.out(2) = !Signal(STATE.value < 4)
+    val invert = Inverter(3)
+    ic.out(0) = invert.out(0)
+    ic.out(1) = invert.out(1)
+    ic.out(2) = invert.out(2)
+    val DO_TEND = invert.in(0)
+    val LOAD_CP = invert.in(0)
+    val CTEN_CP = invert.in(0)
+
+    DO_TEND.signal = Signal(((STATE == 0) AND IS_NOP) OR ((STATE == 2) AND IS_JMP))
+    LOAD_CP.signal = false
+    CTEN_CP.signal = Signal(STATE.value < 4)
 
     Utils.writeBin(ic, Paths.get("state_prom.bin"))
   }
