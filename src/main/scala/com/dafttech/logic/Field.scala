@@ -93,7 +93,7 @@ object Field {
   }
 
   object Ref {
-    def apply(field: Field) = new Ref(field)
+    def apply(field: Field): Ref = new Ref(field)
 
     def apply(): Ref = apply(null)
   }

@@ -106,12 +106,12 @@ class Workspace {
     val FTCH_RA = ic.out(3)
     val FTCH_RB = ic.out(4)
 
-    DO_TEND.signal = !Signal(    ((STATE == Field(0)) AND (INSTRUCTION == Field(0)))
-                              OR ((STATE == Field(1)) AND (INSTRUCTION == Field(1))))
-    LOAD_CP.signal = !Signal((STATE == Field(0)) AND (INSTRUCTION == Field(1)))
+    DO_TEND.signal = !Signal(   ((STATE == 0) AND (INSTRUCTION == 0))
+                             OR ((STATE == 1) AND (INSTRUCTION == 1)))
+    LOAD_CP.signal = !Signal((STATE == 0) AND (INSTRUCTION == 1))
     CTEN_CP.signal = !Signal(STATE < 2)
-    FTCH_RA.signal = Signal(STATE == Field(0))
-    FTCH_RB.signal = Signal(STATE == Field(1))
+    FTCH_RA.signal = Signal(STATE == 0)
+    FTCH_RB.signal = Signal(STATE == 1)
 
     Utils.writeBin(ic, Paths.get("state_prom.bin"))
   }
