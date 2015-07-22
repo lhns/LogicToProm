@@ -7,7 +7,16 @@ abstract class Field {
   def value: Int
 
   object signal {
-    def apply(i: Int) = Signal(((value >>> i) & 1) != 0)
+    private[this] val cache = new Array[Option[Signal]](32)
+
+    def apply(i: Int) = cache(i) match {
+      case Some(signal) => signal
+      case None => {
+        val signal = Signal(((value >>> i) & 1) != 0)
+        cache(i) = Some(signal)
+        signal
+      }
+    }
   }
 
   def +(field: Field) = Field(value + field.value)
