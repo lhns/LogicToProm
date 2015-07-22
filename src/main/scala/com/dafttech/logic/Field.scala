@@ -28,6 +28,12 @@ abstract class Field {
   }
 
   def +(field: Field) = Field(value + field.value)
+
+  def -(field: Field) = Field(value - field.value)
+
+  def *(field: Field) = Field(value * field.value)
+
+  def /(field: Field) = Field(value / field.value)
 }
 
 object Field {
