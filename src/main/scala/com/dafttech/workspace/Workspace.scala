@@ -88,11 +88,11 @@ class Workspace {
     ic.out(2) = S(a2, b2, c2)
     ic.out(3) = S(a3, b3, c3)
 
-    ic.out(4) = c4;
+    ic.out(4) = c4
 
     val file = new FileOutputStream("output.bin")
-    file.write(Utils.toBin(ic));
-    file.close();
+    file.write(Utils.toBin(ic))
+    file.close()
 
   }
 
@@ -108,8 +108,8 @@ class Workspace {
     /* !CTEN_CP */ ic.out(2) = !Signal(STATE.value < 4)
 
     val file = new FileOutputStream("state_prom.bin")
-    file.write(Utils.toBin(ic));
-    file.close();
+    file.write(Utils.toBin(ic))
+    file.close()
   }
 
   STATE_PROM
