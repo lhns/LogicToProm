@@ -106,17 +106,31 @@ class Workspace {
     val FTCH_RA = ic.out(3)
     val FTCH_RB = ic.out(4)
 
-    DO_TEND.signal = !Signal(   ((STATE == 0) AND (INSTRUCTION == 0))
-                             OR ((STATE == 1) AND (INSTRUCTION == 1)))
-    LOAD_CP.signal = !Signal((STATE == 0) AND (INSTRUCTION == 1))
-    CTEN_CP.signal = !Signal(STATE < 2)
+    DO_TEND.signal = !Signal(   ((STATE == 1) AND (INSTRUCTION == 0))
+                             OR ((STATE == 3) AND (INSTRUCTION == 1)))
+    LOAD_CP.signal = true //!Signal((STATE == 0) AND (INSTRUCTION == 1))
+    CTEN_CP.signal = !Signal((STATE == 1) OR (STATE == 3))
     FTCH_RA.signal = Signal(STATE == 0)
-    FTCH_RB.signal = Signal(STATE == 1)
+    FTCH_RB.signal = Signal(STATE == 2)
 
     Utils.writeBin(ic, Paths.get("state_prom.bin"))
   }
 
+  def SWITCH_NOP_NOTNOP = {
+    val ic = IC(13, 8)
+
+    val STATE = Field(ic.in(0), ic.in(1), ic.in(2), ic.in(3), ic.in(4))
+
+    ic.out(2) = Signal(STATE >= 16)
+    ic.out(5) = Signal(STATE >= 16)
+    ic.out(7) = Signal(STATE >= 16)
+    ic.out(6) = Signal(STATE >= 16)
+
+    Utils.writeBin(ic, Paths.get("switch.bin"))
+  }
+
   STATE_PROM
+  SWITCH_NOP_NOTNOP
 
   /*val f = Field(3)
 
