@@ -4,6 +4,7 @@ import java.io.FileOutputStream
 
 import com.dafttech.logic.ic.{AndGate, IC, OrGate, XOrGate}
 import com.dafttech.logic.{Field, Signal, Utils}
+import Signal._
 
 /**
  * Created by LolHens on 21.07.2015.
@@ -95,11 +96,27 @@ class Workspace {
 
   }
 
-  //adder
+  def STATE_PROM = {
+    val ic = IC(13,8)
 
-  val f = Field(3)
+    val STATE  = Field(ic.in(0), ic.in(1), ic.in(2), ic.in(3))
+    val IS_NOP = ic.in(4)
+    val IS_JMP = ic.in(5)
+
+    /*  DO_TEND */ ic.out(0) = !Signal((((STATE.value == 0) AND IS_NOP) OR ((STATE.value == 2) AND IS_JMP)).value)
+    /* !LOAD_CP */ ic.out(1) = true
+    /* !CTEN_CP */ ic.out(2) = !Signal(STATE.value < 4)
+
+    val file = new FileOutputStream("state_prom.bin")
+    file.write(Utils.toBin(ic));
+    file.close();
+  }
+
+  STATE_PROM
+
+  /*val f = Field(3)
 
   val f2 = Field(f.signal(0), f.signal(1), f.signal(2))
 
-  println(f2.value)
+  println(f2.value)*/
 }
