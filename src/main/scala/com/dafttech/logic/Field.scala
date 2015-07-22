@@ -54,6 +54,11 @@ abstract class Field {
   def >=(field: Field) = value >= field.value
 
   def <=(field: Field) = value <= field.value
+
+
+  def ==(int: Int) = value == int
+
+  def !=(int: Int) = value != int
 }
 
 object Field {
@@ -75,6 +80,7 @@ object Field {
 
     int
   }
+
 
   implicit def intToField(int: Int): Field = Field(int)
 

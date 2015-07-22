@@ -29,6 +29,11 @@ abstract class Signal {
   def ==(signal: Signal) = value == signal.value
 
   def !=(signal: Signal) = value != signal.value
+
+
+  def ==(boolean: Boolean) = value == boolean
+
+  def !=(boolean: Boolean) = value != boolean
 }
 
 object Signal {
@@ -39,6 +44,7 @@ object Signal {
   def apply(signal: => Signal)(implicit dummyImplicit: DummyImplicit) = new Signal {
     override def value: Boolean = signal.value
   }
+
 
   implicit def booleanToSignal(boolean: Boolean): Signal = Signal(boolean)
 
