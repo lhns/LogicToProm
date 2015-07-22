@@ -7,14 +7,22 @@ abstract class Field {
   def value: Int
 
   object signal {
-    private[this] val cache = new Array[Option[Signal]](32)
+    private[this] var cache: Option[Array[Option[Signal]]] = None
 
-    def apply(i: Int) = cache(i) match {
-      case Some(signal) => signal
-      case None => {
-        val signal = Signal(((value >>> i) & 1) != 0)
-        cache(i) = Some(signal)
-        signal
+    def apply(i: Int) = {
+      val signals = cache match {
+        case None =>
+          val signals = new Array[Option[Signal]](32)
+          cache = Some(signals)
+          signals
+        case Some(cache) => cache
+      }
+      signals(i) match {
+        case None =>
+          val signal = Signal(((value >>> i) & 1) != 0)
+          signals(i) = Some(signal)
+          signal
+        case Some(signal) => signal
       }
     }
   }
