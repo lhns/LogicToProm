@@ -10,7 +10,7 @@ class XOrGate private() extends IC(2, 1) {
 
   val output = out(0)
 
-  out(0) = a ^ b
+  output.signal = a ^ b
 }
 
 object XOrGate {
