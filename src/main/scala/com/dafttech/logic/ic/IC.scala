@@ -41,7 +41,7 @@ object IC {
   abstract class Pins(val size: Int) {
     private[this] val array = new Array[Signal.Ref](size)
 
-    for (i <- 0 until size) array(i) = Signal.Ref(null)
+    for (i <- 0 until size) array(i) = Signal.Ref()
 
 
     def update(i: Int, signal: Signal) = i match {

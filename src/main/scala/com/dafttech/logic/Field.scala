@@ -88,6 +88,8 @@ object Field {
 
   object Ref {
     def apply(field: Field) = new Ref(field)
+
+    def apply() = apply(null)
   }
 
 }

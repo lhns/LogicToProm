@@ -52,6 +52,8 @@ object Signal {
 
   object Ref {
     def apply(signal: Signal) = new Ref(signal)
+
+    def apply() = apply(null)
   }
 
 }

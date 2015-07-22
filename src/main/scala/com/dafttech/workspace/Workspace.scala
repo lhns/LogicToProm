@@ -101,13 +101,14 @@ class Workspace {
     val IS_NOP = ic.in(4)
     val IS_JMP = ic.in(5)
 
-    val invert = Inverter(3)
-    ic.out(0) = invert.out(0)
-    ic.out(1) = invert.out(1)
-    ic.out(2) = invert.out(2)
-    val DO_TEND = invert.in(0)
-    val LOAD_CP = invert.in(0)
-    val CTEN_CP = invert.in(0)
+    val DO_TEND = Signal.Ref()
+    val LOAD_CP = Signal.Ref()
+    val CTEN_CP = Signal.Ref()
+
+    ic.out(0) = !DO_TEND
+    ic.out(1) = !LOAD_CP
+    ic.out(2) = !CTEN_CP
+
 
     DO_TEND.signal = Signal(((STATE == 0) AND IS_NOP) OR ((STATE == 2) AND IS_JMP))
     LOAD_CP.signal = false
