@@ -39,7 +39,5 @@ object Utils {
     array
   }
 
-  def writeBin(ic: IC, path: Path) = {
-    Files.write(path, toBin(ic))
-  }
+  def writeBin(ic: IC, path: Path) = Files.write(path, toBin(ic))
 }
