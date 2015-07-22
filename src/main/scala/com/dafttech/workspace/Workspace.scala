@@ -98,21 +98,20 @@ class Workspace {
     val ic = IC(13, 8)
 
     val STATE = Field(ic.in(0), ic.in(1), ic.in(2), ic.in(3))
-    val IS_NOP = ic.in(4)
-    val IS_JMP = ic.in(5)
+    val INSTRUCTION = Field(ic.in(4), ic.in(5), ic.in(6), ic.in(7), ic.in(8), ic.in(9), ic.in(10), ic.in(11))
 
-    val DO_TEND = Signal.Ref()
-    val LOAD_CP = Signal.Ref()
-    val CTEN_CP = Signal.Ref()
+    val DO_TEND = ic.out(0)
+    val LOAD_CP = ic.out(1)
+    val CTEN_CP = ic.out(2)
+    val FTCH_RA = ic.out(3)
+    val FTCH_RB = ic.out(4)
 
-    ic.out(0) = !DO_TEND
-    ic.out(1) = !LOAD_CP
-    ic.out(2) = !CTEN_CP
-
-
-    DO_TEND.signal = Signal(((STATE == 0) AND IS_NOP) OR ((STATE == 2) AND IS_JMP))
-    LOAD_CP.signal = false
-    CTEN_CP.signal = Signal(STATE.value < 4)
+    DO_TEND.signal = !Signal(    ((STATE == Field(0)) AND (INSTRUCTION == Field(0)))
+                              OR ((STATE == Field(1)) AND (INSTRUCTION == Field(1))))
+    LOAD_CP.signal = !Signal((STATE == Field(0)) AND (INSTRUCTION == Field(1)))
+    CTEN_CP.signal = !Signal(STATE < 2)
+    FTCH_RA.signal = Signal(STATE == Field(0))
+    FTCH_RB.signal = Signal(STATE == Field(1))
 
     Utils.writeBin(ic, Paths.get("state_prom.bin"))
   }
