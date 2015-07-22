@@ -1,10 +1,14 @@
 package com.dafttech.logic
 
+import com.dafttech.logic.Field.Ref
+
 /**
  * Created by LolHens on 22.07.2015.
  */
 abstract class Field {
   def value: Int
+
+  def ref = Ref(this)
 
   object signal {
     private[this] var cache: Option[Array[Signal]] = None
@@ -26,6 +30,7 @@ abstract class Field {
       }
     }
   }
+
 
   def +(field: Field) = Field(value + field.value)
 
@@ -54,7 +59,7 @@ object Field {
     override def value: Int = _value
   }
 
-  def apply(field: => Field) = new Field {
+  def apply(field: => Field)(implicit dummyImplicit: DummyImplicit) = new Field {
     override def value: Int = field.value
   }
 
@@ -70,4 +75,17 @@ object Field {
   }
 
   implicit def intToField(int: Int): Field = Field(int)
+
+
+  class Ref private(var field: Field) extends Field {
+    override def value: Int = field match {
+      case null => 0
+      case field => field.value
+    }
+  }
+
+  object Ref {
+    def apply(field: Field) = new Ref(field)
+  }
+
 }

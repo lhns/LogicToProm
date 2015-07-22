@@ -39,7 +39,21 @@ object IC {
   def apply(inPins: Int, outPins: Int): IC = new IC(inPins, outPins)
 
   abstract class Pins(val size: Int) {
-    private val arrayIn = new Array[Signal](size)
+    private val array = new Array[Signal.Ref](size)
+
+    for (i <- 0 until size) array(i) = Signal.Ref(null)
+
+    def update(i: Int, signal: Signal) = i match {
+      case _ if (i < 0 || i >= size) => throw new IndexOutOfBoundsException()
+      case _ => array(i).signal = signal
+    }
+
+    def apply(i: Int): Signal = i match {
+      case _ if (i < 0 || i >= size) => throw new IndexOutOfBoundsException()
+      case _ => array(i)
+    }
+
+    /*private val arrayIn = new Array[Signal](size)
 
     private val arrayOut = new Array[Signal](size)
 
@@ -56,7 +70,7 @@ object IC {
     def apply(i: Int): Signal = i match {
       case _ if (i < 0 || i >= size) => throw new IndexOutOfBoundsException()
       case _ => arrayOut(i)
-    }
+    }*/
   }
 
 }
