@@ -1,5 +1,7 @@
 package com.dafttech.logic
 
+import java.nio.file.{Files, Path}
+
 import com.dafttech.logic.ic.IC
 
 import scala.collection.mutable.ListBuffer
@@ -35,5 +37,9 @@ object Utils {
       array(i) = booleanListToInt(table(intToBooleanList(i, ic.in.size))).toByte
 
     array
+  }
+
+  def writeBin(ic: IC, path: Path) = {
+    Files.write(path, toBin(ic))
   }
 }

@@ -1,10 +1,10 @@
 package com.dafttech.workspace
 
-import java.io.FileOutputStream
+import java.nio.file.Paths
 
+import com.dafttech.logic.Signal._
 import com.dafttech.logic.ic.{AndGate, IC, OrGate, XOrGate}
 import com.dafttech.logic.{Field, Signal, Utils}
-import Signal._
 
 /**
  * Created by LolHens on 21.07.2015.
@@ -90,16 +90,14 @@ class Workspace {
 
     ic.out(4) = c4
 
-    val file = new FileOutputStream("output.bin")
-    file.write(Utils.toBin(ic))
-    file.close()
+    Utils.writeBin(ic, Paths.get("output.bin"))
 
   }
 
   def STATE_PROM = {
-    val ic = IC(13,8)
+    val ic = IC(13, 8)
 
-    val STATE  = Field(ic.in(0), ic.in(1), ic.in(2), ic.in(3))
+    val STATE = Field(ic.in(0), ic.in(1), ic.in(2), ic.in(3))
     val IS_NOP = ic.in(4)
     val IS_JMP = ic.in(5)
 
@@ -107,9 +105,7 @@ class Workspace {
     /* !LOAD_CP */ ic.out(1) = true
     /* !CTEN_CP */ ic.out(2) = !Signal(STATE.value < 4)
 
-    val file = new FileOutputStream("state_prom.bin")
-    file.write(Utils.toBin(ic))
-    file.close()
+    Utils.writeBin(ic, Paths.get("state_prom.bin"))
   }
 
   STATE_PROM
