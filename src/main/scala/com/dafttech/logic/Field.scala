@@ -13,21 +13,23 @@ abstract class Field {
   object signal {
     private[this] var cache: Option[Array[Signal]] = None
 
-    def apply(i: Int) = {
-      val signals = cache match {
-        case None =>
-          val signals = new Array[Signal](32)
-          cache = Some(signals)
-          signals
-        case Some(cache) => cache
-      }
-      signals(i) match {
-        case null =>
-          val signal = Signal(((value >>> i) & 1) != 0)
-          signals(i) = signal
-          signal
-        case signal => signal
-      }
+    def apply(i: Int) = i match {
+      case _ if (i < 0) => throw new IndexOutOfBoundsException()
+      case _ =>
+        val signals = cache match {
+          case None =>
+            val signals = new Array[Signal](32)
+            cache = Some(signals)
+            signals
+          case Some(cache) => cache
+        }
+        signals(i) match {
+          case null =>
+            val signal = Signal(((value >>> i) & 1) != 0)
+            signals(i) = signal
+            signal
+          case signal => signal
+        }
     }
   }
 
