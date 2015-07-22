@@ -19,11 +19,20 @@ abstract class Signal {
   def XOR(signal: Signal) = ^(signal)
 
   def unary_! = Signal(!value)
+
+
+  def ==(signal: Signal) = value == signal.value
+
+  def !=(signal: Signal) = value != signal.value
 }
 
 object Signal {
   def apply(_value: => Boolean) = new Signal {
     override def value: Boolean = _value
+  }
+
+  def apply(signal: => Signal) = new Signal {
+    override def value: Boolean = signal.value
   }
 
   implicit def booleanToSignal(boolean: Boolean): Signal = Signal(boolean)

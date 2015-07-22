@@ -34,11 +34,28 @@ abstract class Field {
   def *(field: Field) = Field(value * field.value)
 
   def /(field: Field) = Field(value / field.value)
+
+
+  def ==(field: Field) = value == field.value
+
+  def !=(field: Field) = value != field.value
+
+  def >(field: Field) = value > field.value
+
+  def <(field: Field) = value < field.value
+
+  def >=(field: Field) = value >= field.value
+
+  def <=(field: Field) = value <= field.value
 }
 
 object Field {
   def apply(_value: => Int) = new Field {
     override def value: Int = _value
+  }
+
+  def apply(field: => Field) = new Field {
+    override def value: Int = field.value
   }
 
   def apply(signals: Signal*): Field = Field(signalsToField(signals))
