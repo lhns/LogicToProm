@@ -31,10 +31,13 @@ object Utils {
   def toBin(ic: IC): Array[Byte] = {
     val table = ic.table
 
-    val array = new Array[Byte](table.size)
+    val bytesPerIn: Int = Math.ceil(ic.out.size / 8.0).toInt
 
-    for (i <- 0 until array.size)
-      array(i) = booleanListToInt(table(intToBooleanList(i, ic.in.size))).toByte
+    val array = new Array[Byte](table.size * bytesPerIn)
+
+    for (entry <- 0 until table.size)
+      for (byteNum <- 0 until bytesPerIn)
+        array(entry * bytesPerIn + byteNum) = ((booleanListToInt(table(intToBooleanList(entry, ic.in.size))) >>> (byteNum * 8)) & 0xFF).toByte
 
     array
   }
