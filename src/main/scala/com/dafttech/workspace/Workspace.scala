@@ -141,7 +141,7 @@ class Workspace {
     Utils.writeBin(ic, Paths.get("switch.bin"))
   }
 
-  def ADDER = {
+  def ADD_SUB = {
     val adder = IC(16, 16)
 
     val in1 = Field(
@@ -190,7 +190,57 @@ class Workspace {
     adder
   }
 
-  Utils.writeBin(ADDER, Paths.get("adder.bin"))
+  def NAND_XOR = {
+    val adder = IC(16, 16)
+
+    val in1 = Field(
+      adder.in(0),
+      adder.in(1),
+      adder.in(2),
+      adder.in(3),
+      adder.in(4),
+      adder.in(5),
+      adder.in(6),
+      adder.in(7))
+
+    val in2 = Field(
+      adder.in(8),
+      adder.in(9),
+      adder.in(10),
+      adder.in(11),
+      adder.in(12),
+      adder.in(13),
+      adder.in(14),
+      adder.in(15))
+
+    val out1 = Field.Ref()
+    adder.out(0).signal = out1.signal(0)
+    adder.out(1).signal = out1.signal(1)
+    adder.out(2).signal = out1.signal(2)
+    adder.out(3).signal = out1.signal(3)
+    adder.out(4).signal = out1.signal(4)
+    adder.out(5).signal = out1.signal(5)
+    adder.out(6).signal = out1.signal(6)
+    adder.out(7).signal = out1.signal(7)
+
+    val out2 = Field.Ref()
+    adder.out(8).signal = out2.signal(0)
+    adder.out(9).signal = out2.signal(1)
+    adder.out(10).signal = out2.signal(2)
+    adder.out(11).signal = out2.signal(3)
+    adder.out(12).signal = out2.signal(4)
+    adder.out(13).signal = out2.signal(5)
+    adder.out(14).signal = out2.signal(6)
+    adder.out(15).signal = out2.signal(7)
+
+    out1.field = ~(in1 & in2)
+    out2.field = in1 ^ in2
+
+    adder
+  }
+
+  Utils.writeBin(ADD_SUB, Paths.get("addsub.bin"))
+  Utils.writeBin(NAND_XOR, Paths.get("nandxor.bin"))
 
   //STATE_PROM
   //SWITCH_NOP_NOTNOP

@@ -42,6 +42,14 @@ abstract class Field {
 
   def /(field: Field) = Field(value / field.value)
 
+  def &(field: Field) = Field(value & field.value)
+
+  def ^(field: Field) = Field(value ^ field.value)
+
+  def |(field: Field) = Field(value | field.value)
+
+  def unary_~() = Field(~value)
+
 
   def ==(field: Field) = value == field.value
 
