@@ -45,16 +45,20 @@ abstract class Field {
     if (thatValue == 0) 0 else value / thatValue
   }
 
-  def &(field: Field) = Field(value & field.value)
-
-  def ^(field: Field) = Field(value ^ field.value)
-
-  def |(field: Field) = Field(value | field.value)
-
   def %(field: Field) = Field {
     val thatValue = field.value
     if (thatValue == 0) 0 else value % thatValue
   }
+
+  def &(field: Field) = Field(value & field.value)
+
+  def |(field: Field) = Field(value | field.value)
+
+  def ^(field: Field) = Field(value ^ field.value)
+
+  def >>(field: Field) = Field(value >> field.value)
+
+  def <<(field: Field) = Field(value << field.value)
 
   def unary_~() = Field(~value)
 
