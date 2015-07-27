@@ -51,7 +51,10 @@ abstract class Field {
 
   def |(field: Field) = Field(value | field.value)
 
-  def %(field: Field) = Field(value % field.value)
+  def %(field: Field) = Field {
+    val thatValue = field.value
+    if (thatValue == 0) 0 else value % thatValue
+  }
 
   def unary_~() = Field(~value)
 
