@@ -239,8 +239,105 @@ class Workspace {
     adder
   }
 
-  Utils.writeBin(ADD_SUB, Paths.get("addsub.bin"))
-  Utils.writeBin(NAND_XOR, Paths.get("nandxor.bin"))
+  def MULTIPLIER = {
+    val adder = IC(16, 16)
+
+    val in1 = Field(
+      adder.in(0),
+      adder.in(1),
+      adder.in(2),
+      adder.in(3),
+      adder.in(4),
+      adder.in(5),
+      adder.in(6),
+      adder.in(7))
+
+    val in2 = Field(
+      adder.in(8),
+      adder.in(9),
+      adder.in(10),
+      adder.in(11),
+      adder.in(12),
+      adder.in(13),
+      adder.in(14),
+      adder.in(15))
+
+    val out1 = Field.Ref()
+    adder.out(0).signal = out1.signal(0)
+    adder.out(1).signal = out1.signal(1)
+    adder.out(2).signal = out1.signal(2)
+    adder.out(3).signal = out1.signal(3)
+    adder.out(4).signal = out1.signal(4)
+    adder.out(5).signal = out1.signal(5)
+    adder.out(6).signal = out1.signal(6)
+    adder.out(7).signal = out1.signal(7)
+    adder.out(8).signal = out1.signal(8)
+    adder.out(9).signal = out1.signal(9)
+    adder.out(10).signal = out1.signal(10)
+    adder.out(11).signal = out1.signal(11)
+    adder.out(12).signal = out1.signal(12)
+    adder.out(13).signal = out1.signal(13)
+    adder.out(14).signal = out1.signal(14)
+    adder.out(15).signal = out1.signal(15)
+
+    out1.field = in1 * in2
+
+    adder
+  }
+
+  def DIV_MOD = {
+    val adder = IC(16, 16)
+
+    val in1 = Field(
+      adder.in(0),
+      adder.in(1),
+      adder.in(2),
+      adder.in(3),
+      adder.in(4),
+      adder.in(5),
+      adder.in(6),
+      adder.in(7))
+
+    val in2 = Field(
+      adder.in(8),
+      adder.in(9),
+      adder.in(10),
+      adder.in(11),
+      adder.in(12),
+      adder.in(13),
+      adder.in(14),
+      adder.in(15))
+
+    val out1 = Field.Ref()
+    adder.out(0).signal = out1.signal(0)
+    adder.out(1).signal = out1.signal(1)
+    adder.out(2).signal = out1.signal(2)
+    adder.out(3).signal = out1.signal(3)
+    adder.out(4).signal = out1.signal(4)
+    adder.out(5).signal = out1.signal(5)
+    adder.out(6).signal = out1.signal(6)
+    adder.out(7).signal = out1.signal(7)
+
+    val out2 = Field.Ref()
+    adder.out(8).signal = out2.signal(0)
+    adder.out(9).signal = out2.signal(1)
+    adder.out(10).signal = out2.signal(2)
+    adder.out(11).signal = out2.signal(3)
+    adder.out(12).signal = out2.signal(4)
+    adder.out(13).signal = out2.signal(5)
+    adder.out(14).signal = out2.signal(6)
+    adder.out(15).signal = out2.signal(7)
+
+    out1.field = in1 / in2
+    out2.field = in1 % in2
+
+    adder
+  }
+
+  //Utils.writeBin(ADD_SUB, Paths.get("addsub.bin"))
+  //Utils.writeBin(NAND_XOR, Paths.get("nandxor.bin"))
+  //Utils.writeBin(MULTIPLIER, Paths.get("multiplier.bin"))
+  Utils.writeBin(DIV_MOD, Paths.get("divmod.bin"))
 
   //STATE_PROM
   //SWITCH_NOP_NOTNOP
