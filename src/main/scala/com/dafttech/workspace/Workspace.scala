@@ -7,8 +7,8 @@ import com.dafttech.logic.ic._
 import com.dafttech.logic.{Field, Signal, Utils}
 
 /**
- * Created by LolHens on 21.07.2015.
- */
+  * Created by LolHens on 21.07.2015.
+  */
 class Workspace {
   def test1 = {
     val on = Signal(true)
@@ -90,8 +90,8 @@ class Workspace {
 
     ic.out(4) = c4
 
-    Utils.writeBin(ic, Paths.get("output.bin"))
-
+    //Utils.writeBin(ic, Paths.get("output.bin"))
+    ic
   }
 
   def STATE_PROM = {
@@ -125,8 +125,8 @@ class Workspace {
     MBUS_RDEN.signal = !Signal((STATE < Field(4)) OR (READ_REG == 7))
     RBUS_WREN.signal = Signal(STATE == 4)
 
-
-    Utils.writeBin(ic, Paths.get("state_prom.bin"))
+    //Utils.writeBin(ic, Paths.get("state_prom.bin"))
+    ic
   }
 
   def SWITCH_NOP_NOTNOP = {
@@ -138,7 +138,8 @@ class Workspace {
       ic.out(i) = Signal(STATE == i)
     }
 
-    Utils.writeBin(ic, Paths.get("switch.bin"))
+    //Utils.writeBin(ic, Paths.get("switch.bin"))
+    ic
   }
 
   def ADD_SUB = {
