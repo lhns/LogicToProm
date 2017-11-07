@@ -7,8 +7,8 @@ import com.dafttech.logic.ic.IC
 import scala.collection.mutable.ListBuffer
 
 /**
- * Created by LolHens on 21.07.2015.
- */
+  * Created by LolHens on 21.07.2015.
+  */
 object Utils {
   def intToBooleanList(int: Int, size: Int): List[Boolean] = {
     var list = ListBuffer[Boolean]()
@@ -22,7 +22,7 @@ object Utils {
   def booleanListToInt(list: List[Boolean]): Int = {
     var int: Int = 0
 
-    for (i <- 0 until list.size)
+    for (i <- list.indices)
       int |= (if (list(i)) 1 else 0) << i
 
     int
@@ -42,5 +42,5 @@ object Utils {
     array
   }
 
-  def writeBin(ic: IC, path: Path) = Files.write(path, toBin(ic))
+  def writeBin(ic: IC, path: Path): Unit = Files.write(path, toBin(ic))
 }

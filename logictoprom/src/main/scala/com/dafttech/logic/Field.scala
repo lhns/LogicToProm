@@ -2,9 +2,11 @@ package com.dafttech.logic
 
 import com.dafttech.logic.Field.Ref
 
+import scala.language.implicitConversions
+
 /**
- * Created by LolHens on 22.07.2015.
- */
+  * Created by LolHens on 22.07.2015.
+  */
 abstract class Field {
   def value: Int
 
@@ -13,8 +15,8 @@ abstract class Field {
   object signal {
     private[this] var cache: Option[Array[Signal]] = None
 
-    def apply(i: Int) = i match {
-      case _ if (i < 0) => throw new IndexOutOfBoundsException()
+    def apply(i: Int): Signal = i match {
+      case _ if i < 0 => throw new IndexOutOfBoundsException()
       case _ =>
         val signals = cache match {
           case None =>
@@ -63,30 +65,30 @@ abstract class Field {
   def unary_~() = Field(~value)
 
 
-  def ==(field: Field) = value == field.value
+  def ==(field: Field): Boolean = value == field.value
 
-  def !=(field: Field) = value != field.value
+  def !=(field: Field): Boolean = value != field.value
 
-  def >(field: Field) = value > field.value
+  def >(field: Field): Boolean = value > field.value
 
-  def <(field: Field) = value < field.value
+  def <(field: Field): Boolean = value < field.value
 
-  def >=(field: Field) = value >= field.value
+  def >=(field: Field): Boolean = value >= field.value
 
-  def <=(field: Field) = value <= field.value
+  def <=(field: Field): Boolean = value <= field.value
 
 
-  def ==(int: Int) = value == int
+  def ==(int: Int): Boolean = value == int
 
-  def !=(int: Int) = value != int
+  def !=(int: Int): Boolean = value != int
 }
 
 object Field {
-  def apply(_value: => Int) = new Field {
+  def apply(_value: => Int): Field = new Field {
     override def value: Int = _value
   }
 
-  def apply(field: => Field)(implicit dummyImplicit: DummyImplicit) = new Field {
+  def apply(field: => Field)(implicit dummyImplicit: DummyImplicit): Field = new Field {
     override def value: Int = field.value
   }
 
@@ -95,7 +97,7 @@ object Field {
   private[this] def signalsToField(signals: Seq[Signal]) = {
     var int = 0
 
-    for (i <- 0 until signals.size)
+    for (i <- signals.indices)
       int |= (if (signals(i).value) 1 else 0) << i
 
     int

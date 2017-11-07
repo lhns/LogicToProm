@@ -1,8 +1,8 @@
 package com.dafttech.logic.ic
 
 /**
- * Created by LolHens on 21.07.2015.
- */
+  * Created by LolHens on 21.07.2015.
+  */
 class XOrGate private() extends IC(2, 1) {
   val a = in(0)
 

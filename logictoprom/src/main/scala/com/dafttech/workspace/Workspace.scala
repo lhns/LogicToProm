@@ -10,19 +10,19 @@ import com.dafttech.logic.{Field, Signal, Utils}
   * Created by LolHens on 21.07.2015.
   */
 class Workspace {
-  def test1 = {
+  def test1(): Unit = {
     val on = Signal(true)
     println(on.value)
     println((!on).value)
   }
 
-  def testTable(ic: IC) = {
+  def testTable(ic: IC): Unit = {
     ic.table.foreach(e => {
       println((e._1.mkString(",\t") + "\t=> " + e._2.mkString(",\t")).replaceAll("true", "1").replaceAll("false", "0"))
     })
   }
 
-  def testIC = {
+  def testIC(): Unit = {
     val ic = IC(2, 1)
 
     val variable = ic.in(0) && ic.in(1)
@@ -32,7 +32,7 @@ class Workspace {
     testTable(ic)
   }
 
-  def testICOutDelegate = {
+  def testICOutDelegate(): Unit = {
     val ic = IC(1, 1)
 
     val out = ic.out(0)
@@ -44,7 +44,7 @@ class Workspace {
     println(ic.out(0).value)
   }
 
-  def testGates = {
+  def testGates(): Unit = {
     println("AND:")
     testTable(AndGate())
     println()
@@ -57,11 +57,11 @@ class Workspace {
     testTable(XOrGate())
   }
 
-  def S(a: Signal, b: Signal, c: Signal) = (a XOR b) XOR c
+  def S(a: Signal, b: Signal, c: Signal): Signal = (a XOR b) XOR c
 
-  def Co(a: Signal, b: Signal, c: Signal) = ((a XOR b) AND c) OR (a AND b)
+  def Co(a: Signal, b: Signal, c: Signal): Signal = ((a XOR b) AND c) OR (a AND b)
 
-  def adder = {
+  def adder: IC = {
 
     //in0..2 = 3bit input; in3 = OutEnable; in4 = invert
     val ic = IC(13, 8)
@@ -94,7 +94,7 @@ class Workspace {
     ic
   }
 
-  def STATE_PROM = {
+  def STATE_PROM: IC = {
     val ic = IC(13, 8)
 
     val STATE = Field(ic.in(0), ic.in(1), ic.in(2), ic.in(3))
@@ -129,7 +129,7 @@ class Workspace {
     ic
   }
 
-  def SWITCH_NOP_NOTNOP = {
+  def SWITCH_NOP_NOTNOP: IC = {
     val ic = IC(13, 8)
 
     val STATE = Field(ic.in(1), ic.in(2), ic.in(3))
@@ -142,7 +142,7 @@ class Workspace {
     ic
   }
 
-  def ADD_SUB = {
+  def ADD_SUB: IC = {
     val adder = IC(16, 16)
 
     val in1 = Field(
@@ -191,7 +191,7 @@ class Workspace {
     adder
   }
 
-  def NAND_XOR = {
+  def NAND_XOR: IC = {
     val adder = IC(16, 16)
 
     val in1 = Field(
@@ -240,7 +240,7 @@ class Workspace {
     adder
   }
 
-  def MULTIPLIER = {
+  def MULTIPLIER: IC = {
     val adder = IC(16, 16)
 
     val in1 = Field(
@@ -286,7 +286,7 @@ class Workspace {
     adder
   }
 
-  def DIV_MOD = {
+  def DIV_MOD: IC = {
     val adder = IC(16, 16)
 
     val in1 = Field(

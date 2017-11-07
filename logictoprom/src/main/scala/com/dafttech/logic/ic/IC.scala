@@ -6,8 +6,8 @@ import com.dafttech.logic.{Signal, Utils}
 import scala.collection.mutable.ListBuffer
 
 /**
- * Created by LolHens on 21.07.2015.
- */
+  * Created by LolHens on 21.07.2015.
+  */
 class IC protected(inPins: Int, outPins: Int) {
 
   object in extends Pins(inPins)
@@ -44,13 +44,13 @@ object IC {
     for (i <- 0 until size) array(i) = Signal.Ref()
 
 
-    def update(i: Int, signal: Signal) = i match {
-      case _ if (i < 0 || i >= size) => throw new IndexOutOfBoundsException()
+    def update(i: Int, signal: Signal): Unit = i match {
+      case _ if i < 0 || i >= size => throw new IndexOutOfBoundsException()
       case _ => array(i).signal = signal
     }
 
     def apply(i: Int): Signal.Ref = i match {
-      case _ if (i < 0 || i >= size) => throw new IndexOutOfBoundsException()
+      case _ if i < 0 || i >= size => throw new IndexOutOfBoundsException()
       case _ => array(i)
     }
   }
