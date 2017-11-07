@@ -3,8 +3,6 @@ package com.dafttech.logic.ic
 import com.dafttech.logic.ic.IC.Pins
 import com.dafttech.logic.{Signal, Utils}
 
-import scala.collection.mutable.ListBuffer
-
 /**
   * Created by LolHens on 21.07.2015.
   */
@@ -15,24 +13,15 @@ class IC protected(inPins: Int, outPins: Int) {
   object out extends Pins(outPins)
 
   private def row(inList: List[Boolean]): List[Boolean] = {
-    for (i <- 0 until inList.size) in(i) = Signal(inList(i))
-
-    val outList = ListBuffer[Boolean]()
-    for (i <- 0 until out.size) outList += out(i).value
-
-    outList.toList
+    for (i <- inList.indices) in(i) = Signal(inList(i))
+    (0 until out.size).map(i => out(i).value).toList
   }
 
-  def table: Map[List[Boolean], List[Boolean]] = {
-    var map = Map[List[Boolean], List[Boolean]]()
-
-    for (i <- 0 until Math.pow(2, in.size).toInt) {
-      val list = Utils.intToBooleanList(i, in.size)
-      map += list -> row(list)
-    }
-
-    map
-  }
+  def table: Map[List[Boolean], List[Boolean]] =
+    (0 until Math.pow(2, in.size).toInt).map { i =>
+      val list: List[Boolean] = Utils.intToBooleanList(i, in.size)
+      list -> row(list)
+    }.toMap
 }
 
 object IC {
@@ -44,14 +33,14 @@ object IC {
     for (i <- 0 until size) array(i) = Signal.Ref()
 
 
-    def update(i: Int, signal: Signal): Unit = i match {
-      case _ if i < 0 || i >= size => throw new IndexOutOfBoundsException()
-      case _ => array(i).signal = signal
+    def update(i: Int, signal: Signal): Unit = {
+      require(i >= 0 && i < size)
+      array(i).signal = signal
     }
 
-    def apply(i: Int): Signal.Ref = i match {
-      case _ if i < 0 || i >= size => throw new IndexOutOfBoundsException()
-      case _ => array(i)
+    def apply(i: Int): Signal.Ref = {
+      require(i >= 0 && i < size)
+      array(i)
     }
   }
 

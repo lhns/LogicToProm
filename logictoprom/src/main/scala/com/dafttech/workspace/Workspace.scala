@@ -17,9 +17,13 @@ class Workspace {
   }
 
   def testTable(ic: IC): Unit = {
-    ic.table.foreach(e => {
-      println((e._1.mkString(",\t") + "\t=> " + e._2.mkString(",\t")).replaceAll("true", "1").replaceAll("false", "0"))
-    })
+    ic.table.foreach(e =>
+      println(
+        s"${e._1.mkString(",\t")}\t=> ${e._2.mkString(",\t")}"
+          .replaceAllLiterally("true", "1")
+          .replaceAllLiterally("false", "0")
+      )
+    )
   }
 
   def testIC(): Unit = {

@@ -15,23 +15,20 @@ abstract class Field {
   object signal {
     private[this] var cache: Option[Array[Signal]] = None
 
-    def apply(i: Int): Signal = i match {
-      case _ if i < 0 => throw new IndexOutOfBoundsException()
-      case _ =>
-        val signals = cache match {
-          case None =>
-            val signals = new Array[Signal](32)
-            cache = Some(signals)
-            signals
-          case Some(cache) => cache
-        }
-        signals(i) match {
-          case null =>
-            val signal = Signal(((value >>> i) & 1) != 0)
-            signals(i) = signal
-            signal
-          case signal => signal
-        }
+    def apply(i: Int): Signal = {
+      require(i >= 0)
+
+      val signals = cache.getOrElse {
+        val signals = new Array[Signal](32)
+        cache = Some(signals)
+        signals
+      }
+
+      Option(signals(i)).getOrElse {
+        val signal = Signal(((value >>> i) & 1) != 0)
+        signals(i) = signal
+        signal
+      }
     }
   }
 
@@ -94,24 +91,17 @@ object Field {
 
   def apply(signals: Signal*): Field = Field(signalsToField(signals))
 
-  private[this] def signalsToField(signals: Seq[Signal]) = {
-    var int = 0
-
-    for (i <- signals.indices)
-      int |= (if (signals(i).value) 1 else 0) << i
-
-    int
-  }
+  private[this] def signalsToField(signals: Seq[Signal]) =
+    signals.indices.foldLeft(0)((last, i) =>
+      last | (if (signals(i).value) 1 else 0) << i
+    )
 
 
   implicit def intToField(int: Int): Field = Field(int)
 
 
   class Ref private(var field: Field) extends Field {
-    override def value: Int = field match {
-      case null => 0
-      case field => field.value
-    }
+    override def value: Int = Option(field).map(_.value).getOrElse(0)
   }
 
   object Ref {

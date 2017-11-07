@@ -52,10 +52,7 @@ object Signal {
 
 
   class Ref private(var signal: Signal) extends Signal {
-    override def value: Boolean = signal match {
-      case null => false
-      case field => signal.value
-    }
+    override def value: Boolean = Option(signal).exists(_.value)
   }
 
   object Ref {
