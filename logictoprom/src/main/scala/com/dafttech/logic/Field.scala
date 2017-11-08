@@ -62,22 +62,22 @@ abstract class Field {
   def unary_~() = Field(~value)
 
 
-  def ==(field: Field): Boolean = value == field.value
+  def ==(field: Field): Signal = Signal(value == field.value)
 
-  def !=(field: Field): Boolean = value != field.value
+  def !=(field: Field): Signal = Signal(value != field.value)
 
-  def >(field: Field): Boolean = value > field.value
+  def >(field: Field): Signal = Signal(value > field.value)
 
-  def <(field: Field): Boolean = value < field.value
+  def <(field: Field): Signal = Signal(value < field.value)
 
-  def >=(field: Field): Boolean = value >= field.value
+  def >=(field: Field): Signal = Signal(value >= field.value)
 
-  def <=(field: Field): Boolean = value <= field.value
+  def <=(field: Field): Signal = Signal(value <= field.value)
 
 
-  def ==(int: Int): Boolean = value == int
+  def ==(int: Int): Signal = Signal(value == int)
 
-  def !=(int: Int): Boolean = value != int
+  def !=(int: Int): Signal = Signal(value != int)
 }
 
 object Field {

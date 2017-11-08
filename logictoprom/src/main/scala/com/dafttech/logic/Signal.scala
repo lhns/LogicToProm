@@ -28,14 +28,14 @@ abstract class Signal {
   def unary_! = Signal(!value)
 
 
-  def ==(signal: Signal): Boolean = value == signal.value
+  def ==(signal: Signal): Signal = Signal(value == signal.value)
 
-  def !=(signal: Signal): Boolean = value != signal.value
+  def !=(signal: Signal): Signal = Signal(value != signal.value)
 
 
-  def ==(boolean: Boolean): Boolean = value == boolean
+  def ==(boolean: Boolean): Signal = Signal(value == boolean)
 
-  def !=(boolean: Boolean): Boolean = value != boolean
+  def !=(boolean: Boolean): Signal = Signal(value != boolean)
 }
 
 object Signal {

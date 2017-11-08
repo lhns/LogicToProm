@@ -2,7 +2,6 @@ package com.dafttech.workspace
 
 import java.nio.file.Paths
 
-import com.dafttech.logic.Signal._
 import com.dafttech.logic.ic._
 import com.dafttech.logic.{Field, Signal, Utils}
 
@@ -11,7 +10,7 @@ import com.dafttech.logic.{Field, Signal, Utils}
   */
 class Workspace {
   def test1(): Unit = {
-    val on = Signal(true)
+    val on: Signal = true
     println(on.value)
     println((!on).value)
   }
@@ -43,7 +42,7 @@ class Workspace {
 
     ic.out(0) = ic.in(0)
 
-    ic.in(0) = Signal(true)
+    ic.in(0) = true
 
     println(ic.out(0).value)
   }
@@ -117,17 +116,19 @@ class Workspace {
     val MBUS_RDEN = ic.out(6)
     val RBUS_WREN = ic.out(7)
 
-    DO_TEND.signal = !Signal(((STATE == 1) AND (INSTRUCTION == 0))
-      OR ((STATE == 3) AND (INSTRUCTION == 1))
-      OR (STATE == 5))
-    CTEN_CP.signal = !Signal((STATE == 1) OR ((STATE == 3) AND (READ_REG == 4)))
-    FTCH_RA.signal = Signal(STATE == 0)
-    FTCH_RB.signal = Signal((STATE == 2) AND (READ_REG == 4))
-    SEL_CPA.signal = Signal(STATE < Field(3))
-    LOAD_IP.signal = !Signal(JMP != 0)
+    DO_TEND.signal = !(
+      ((STATE == 1) AND (INSTRUCTION == 0))
+        OR ((STATE == 3) AND (INSTRUCTION == 1))
+        OR (STATE == 5)
+      )
+    CTEN_CP.signal = !((STATE == 1) OR ((STATE == 3) AND (READ_REG == 4)))
+    FTCH_RA.signal = STATE == 0
+    FTCH_RB.signal = (STATE == 2) AND (READ_REG == 4)
+    SEL_CPA.signal = STATE < Field(3)
+    LOAD_IP.signal = JMP == 0
 
-    MBUS_RDEN.signal = !Signal((STATE < Field(4)) OR (READ_REG == 7))
-    RBUS_WREN.signal = Signal(STATE == 4)
+    MBUS_RDEN.signal = !((STATE < Field(4)) OR (READ_REG == 7))
+    RBUS_WREN.signal = STATE == 4
 
     //Utils.writeBin(ic, Paths.get("state_prom.bin"))
     ic
@@ -139,7 +140,7 @@ class Workspace {
     val STATE = Field(ic.in(1), ic.in(2), ic.in(3))
 
     for (i <- 0 until 8) {
-      ic.out(i) = Signal(STATE == i)
+      ic.out(i) = STATE == i
     }
 
     //Utils.writeBin(ic, Paths.get("switch.bin"))
