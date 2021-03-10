@@ -4,8 +4,8 @@ import com.dafttech.logic.ic.IC.Pins
 import com.dafttech.logic.{Signal, Utils}
 
 /**
-  * Created by LolHens on 21.07.2015.
-  */
+ * Created by LolHens on 21.07.2015.
+ */
 class IC protected(inPins: Int, outPins: Int) {
 
   object in extends Pins(inPins)
@@ -17,11 +17,11 @@ class IC protected(inPins: Int, outPins: Int) {
     (0 until out.size).map(i => out(i).value).toList
   }
 
-  def table: Map[List[Boolean], List[Boolean]] =
+  def table: Seq[(List[Boolean], List[Boolean])] =
     (0 until Math.pow(2, in.size).toInt).map { i =>
       val list: List[Boolean] = Utils.intToBooleanList(i, in.size)
       list -> row(list)
-    }.toMap
+    }
 }
 
 object IC {

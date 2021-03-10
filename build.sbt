@@ -5,7 +5,7 @@ inThisBuild(Seq(
   organization := "com.dafttech",
   version := "0.0.1",
 
-  scalaVersion := "2.13.1"
+  scalaVersion := "2.13.5"
 ))
 
 lazy val root = project.in(file("."))

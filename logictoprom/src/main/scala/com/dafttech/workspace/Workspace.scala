@@ -1,13 +1,13 @@
 package com.dafttech.workspace
 
-import java.nio.file.Paths
-
 import com.dafttech.logic.ic._
 import com.dafttech.logic.{Field, Signal, Utils}
 
+import java.nio.file.Paths
+
 /**
-  * Created by LolHens on 21.07.2015.
-  */
+ * Created by LolHens on 21.07.2015.
+ */
 class Workspace {
   def test1(): Unit = {
     val on: Signal = true
@@ -19,8 +19,8 @@ class Workspace {
     ic.table.foreach(e =>
       println(
         s"${e._1.mkString(",\t")}\t=> ${e._2.mkString(",\t")}"
-          .replaceAllLiterally("true", "1")
-          .replaceAllLiterally("false", "0")
+          .replace("true", "1")
+          .replace("false", "0")
       )
     )
   }
@@ -65,9 +65,7 @@ class Workspace {
   def Co(a: Signal, b: Signal, c: Signal): Signal = ((a XOR b) AND c) OR (a AND b)
 
   def adder: IC = {
-
-    //in0..2 = 3bit input; in3 = OutEnable; in4 = invert
-    val ic = IC(13, 8)
+    val ic = IC(9, 5)
 
     val a0 = ic.in(0)
     val a1 = ic.in(1)
@@ -93,7 +91,6 @@ class Workspace {
 
     ic.out(4) = c4
 
-    //Utils.writeBin(ic, Paths.get("output.bin"))
     ic
   }
 
@@ -344,6 +341,7 @@ class Workspace {
   //Utils.writeBin(NAND_XOR, Paths.get("nandxor.bin"))
   //Utils.writeBin(MULTIPLIER, Paths.get("multiplier.bin"))
   Utils.writeBin(DIV_MOD, Paths.get("divmod.bin"))
+  //println(Utils.tabSeparatedLogicTable(adder))
 
   //STATE_PROM
   //SWITCH_NOP_NOTNOP

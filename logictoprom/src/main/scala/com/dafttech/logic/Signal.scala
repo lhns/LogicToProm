@@ -5,19 +5,19 @@ import com.dafttech.logic.Signal.Ref
 import scala.language.implicitConversions
 
 /**
-  * Created by LolHens on 21.07.2015.
-  */
+ * Created by LolHens on 21.07.2015.
+ */
 abstract class Signal {
   def value: Boolean
 
-  def ref = Ref(this)
+  def ref: Ref = Ref(this)
 
 
-  def &&(signal: Signal) = Signal(value && signal.value)
+  def &&(signal: Signal): Signal = Signal(value && signal.value)
 
-  def ||(signal: Signal) = Signal(value || signal.value)
+  def ||(signal: Signal): Signal = Signal(value || signal.value)
 
-  def ^(signal: Signal) = Signal(value ^ signal.value)
+  def ^(signal: Signal): Signal = Signal(value ^ signal.value)
 
   def AND(signal: Signal): Signal = &&(signal)
 
@@ -25,7 +25,7 @@ abstract class Signal {
 
   def XOR(signal: Signal): Signal = ^(signal)
 
-  def unary_! = Signal(!value)
+  def unary_! : Signal = Signal(!value)
 
 
   def ==(signal: Signal): Signal = Signal(value == signal.value)

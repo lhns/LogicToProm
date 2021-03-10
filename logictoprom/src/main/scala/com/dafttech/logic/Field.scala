@@ -5,8 +5,8 @@ import com.dafttech.logic.Field.Ref
 import scala.language.implicitConversions
 
 /**
-  * Created by LolHens on 22.07.2015.
-  */
+ * Created by LolHens on 22.07.2015.
+ */
 abstract class Field {
   def value: Int
 
